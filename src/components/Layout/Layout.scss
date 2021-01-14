@@ -9,11 +9,11 @@
   & header {
     background-color: var(--bg-element-color);
 
-    @include media("<=phone") {
+    @include media("<=phone-big") {
       padding: 0 1rem;
     }
 
-    @include media(">=phone") {
+    @include media(">=phone-big") {
       padding: 0 2rem;
     }
 

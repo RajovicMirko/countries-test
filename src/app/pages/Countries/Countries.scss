@@ -1,0 +1,24 @@
+@import "../../../scss/breakpoints";
+
+.countries {
+  position: relative;
+  min-height: inherit;
+  display: grid;
+  grid-template-rows: (auto, 1fr);
+
+  & .controles {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+
+    @include media("<=tablet") {
+      flex-direction: column;
+    }
+  }
+
+  & .cards {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, 300px);
+  }
+}

@@ -1,0 +1,15 @@
+.select {
+  position: relative;
+  border: inherit;
+  border-radius: inherit;
+  outline: inherit;
+  background: inherit;
+
+  flex: 1 1 100%;
+  border-radius: 7px;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+
+  background-color: var(--bg-element-color);
+  color: var(--text-color);
+}
