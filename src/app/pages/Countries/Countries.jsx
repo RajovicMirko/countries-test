@@ -1,8 +1,10 @@
 import "./Countries.scss";
 import React from "react";
+// components
+import HoverBox from "components/global/effects/HoverBox";
 import InputText from "components/global/Input/Text";
 import Select from "components/global/Select";
-import HoverBox from "components/global/effects/HoverBox";
+import Card from "components/global/Card";
 
 function Countries() {
   const filterOptions = [
@@ -41,12 +43,7 @@ function Countries() {
         </HoverBox>
       </section>
       <section className="cards">
-        <div>cards</div>
-        <div>cards</div>
-        <div>cards</div>
-        <div>cards</div>
-        <div>cards</div>
-        <div>cards</div>
+        <Card title="Card" />
       </section>
     </section>
   );

@@ -19,6 +19,23 @@
   & .cards {
     display: grid;
     grid-gap: 1rem;
-    grid-template-columns: repeat(auto-fit, 280px);
+    justify-content: space-between;
+    padding-bottom: 1rem;
+
+    @include media("<=phone-big") {
+      grid-template-columns: 1fr;
+    }
+
+    @include media(">=phone-big") {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @include media(">tablet") {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @include media(">=desktop") {
+      grid-template-columns: repeat(auto-fit, 300px);
+    }
   }
 }
