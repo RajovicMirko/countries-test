@@ -7,66 +7,79 @@ import HoverBox from "components/global/effects/HoverBox";
 import InputText from "components/global/Input/Text";
 import Select from "components/global/Select";
 import Card from "components/global/Card";
+import Loading from "components/global/Loading";
 
 function Countries() {
-  const { countries, fetchCountries } = useCountries();
+  const {
+    isLoading,
+    countries,
+    regionOptions,
+    setRegionFilterValue,
+    setSearchValue,
+    fetchCountries,
+  } = useCountries();
 
   useEffect(() => {
     fetchCountries();
   }, []);
 
-  const filterOptions = [
-    { key: "africa", value: "Africa" },
-    { key: "america", value: "America" },
-    { key: "asia", value: "Asia" },
-    { key: "europe", value: "Europe" },
-    { key: "oceania", value: "Oceania" },
-  ];
-
   const handleSearch = (value) => {
-    console.log("search value " + value);
+    setSearchValue(value);
   };
 
   const handleFilter = (value) => {
-    console.log("filter value " + value);
+    if (value) setRegionFilterValue(value);
   };
 
-  return (
-    <section className="countries">
-      <section className="controles">
-        <HoverBox>
-          <InputText
-            placeholder="Search for a country..."
-            icon="fas fa-search"
-            onChange={handleSearch}
-          />
-        </HoverBox>
+  const NoData = () => <div>No data to display</div>;
 
-        <HoverBox>
-          <Select
-            defaultValue="Filter by Region"
-            options={filterOptions}
-            onChange={handleFilter}
-          />
-        </HoverBox>
-      </section>
-      <section className="cards">
-        {countries &&
-          countries.map((country) => (
-            <Card
-              key={country.alpha3Code}
-              title={country.name}
-              img={country.flag}
-              description={{
-                Population: formatNumber(country.population) || "N/A",
-                Region: country.region || "N/A",
-                Capital: country.capital || "N/A",
-              }}
-            />
-          ))}
-      </section>
-    </section>
-  );
+  switch (true) {
+    case isLoading:
+      return <Loading text="Loading countries..." />;
+
+    default:
+      return (
+        <section className="countries">
+          <section className="controles">
+            <HoverBox>
+              <InputText
+                placeholder="Search for a country..."
+                icon="fas fa-search"
+                onChange={handleSearch}
+              />
+            </HoverBox>
+
+            <HoverBox>
+              <Select
+                defaultValue="Filter by Region"
+                options={regionOptions}
+                onChange={handleFilter}
+              />
+            </HoverBox>
+          </section>
+
+          {countries && (
+            <section className="cards">
+              {countries &&
+                countries.map((country) => (
+                  <Card
+                    key={country.alpha3Code}
+                    title={country.name}
+                    img={country.flag}
+                    description={{
+                      Population: formatNumber(country.population) || "N/A",
+                      Region: country.region || "N/A",
+                      Capital: country.capital || "N/A",
+                    }}
+                  />
+                ))}
+            </section>
+          )}
+
+          {!countries.length && <NoData />}
+        </section>
+      );
+  }
 }
 
 export default Countries;
