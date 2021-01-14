@@ -1,7 +1,7 @@
 // pages
 import Error404 from "app/pages/Error404";
 import Countries from "app/pages/Countries";
-import Countrie from "app/pages/Countrie";
+import Country from "app/pages/Country";
 
 const Config = () => {
   const pages = [
@@ -18,9 +18,9 @@ const Config = () => {
       isNavLink: true,
     },
     {
-      path: "/countrie/:id",
-      name: "Countrie",
-      component: Countrie,
+      path: "/country/:id",
+      name: "Country",
+      component: Country,
       isNavLink: true,
     },
   ];
