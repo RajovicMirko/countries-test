@@ -6,6 +6,7 @@ import {
   THEME_BG_ELEMENT_COLOR,
   THEME_BG_INPUT_COLOR,
   THEME_TEXT_COLOR,
+  THEME_BOX_SHADOW_COLOR,
 } from "utils/constants";
 
 const ThemeContext = createContext();
@@ -17,11 +18,13 @@ const themes = {
     [THEME_BG_ELEMENT_COLOR]: "hsl(0, 0%, 100%)",
     [THEME_BG_INPUT_COLOR]: "hsl(0, 0%, 52%)",
     [THEME_TEXT_COLOR]: "hsl(200, 15%, 8%)",
+    [THEME_BOX_SHADOW_COLOR]: "17, 21, 23",
   },
   dark: {
     [THEME_BG_COLOR]: "hsl(207, 26%, 17%)",
     [THEME_BG_ELEMENT_COLOR]: "hsl(209, 23%, 22%)",
     [THEME_TEXT_COLOR]: "hsl(0, 0%, 100%)",
+    [THEME_BOX_SHADOW_COLOR]: "255, 255, 255",
   },
 };
 
