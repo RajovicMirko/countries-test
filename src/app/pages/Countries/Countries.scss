@@ -21,7 +21,7 @@
 
   & .cards {
     display: grid;
-    grid-gap: 1rem;
+    grid-gap: 1.5rem;
     justify-content: space-between;
     padding-bottom: 1rem;
 
@@ -33,12 +33,12 @@
       grid-template-columns: 1fr 1fr;
     }
 
-    @include media(">tablet") {
+    @include media(">=tablet") {
       grid-template-columns: 1fr 1fr 1fr;
     }
 
     @include media(">=desktop") {
-      grid-template-columns: repeat(auto-fit, 300px);
+      grid-template-columns: repeat(auto-fit, 270px);
     }
   }
 }

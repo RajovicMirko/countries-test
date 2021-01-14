@@ -8,8 +8,8 @@ const defaultProps = {
 };
 
 function Select(props) {
-  const { options, value, onChange, defaultText } = props;
-  const [selectValue, setSelectValue] = useState(value);
+  const { options, onChange, defaultText } = props;
+  const [selectValue, setSelectValue] = useState("");
 
   useEffect(() => onChange(selectValue), [selectValue, onChange]);
 

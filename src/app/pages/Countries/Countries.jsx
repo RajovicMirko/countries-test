@@ -1,5 +1,7 @@
 import "./Countries.scss";
-import React from "react";
+import React, { useEffect } from "react";
+import useCountries from "hooks/useCountries";
+import { formatNumber } from "utils/helpers";
 // components
 import HoverBox from "components/global/effects/HoverBox";
 import InputText from "components/global/Input/Text";
@@ -7,6 +9,12 @@ import Select from "components/global/Select";
 import Card from "components/global/Card";
 
 function Countries() {
+  const { countries, fetchCountries } = useCountries();
+
+  useEffect(() => {
+    fetchCountries();
+  }, []);
+
   const filterOptions = [
     { key: "africa", value: "Africa" },
     { key: "america", value: "America" },
@@ -43,7 +51,19 @@ function Countries() {
         </HoverBox>
       </section>
       <section className="cards">
-        <Card title="Card" />
+        {countries &&
+          countries.map((country) => (
+            <Card
+              key={country.alpha3Code}
+              title={country.name}
+              img={country.flag}
+              description={{
+                Population: formatNumber(country.population) || "N/A",
+                Region: country.region || "N/A",
+                Capital: country.capital || "N/A",
+              }}
+            />
+          ))}
       </section>
     </section>
   );

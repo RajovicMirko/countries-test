@@ -8,19 +8,25 @@
   color: var(--text-color);
 
   & img {
-    height: "180px";
-    width: "100%";
+    height: 180px;
+    width: 100%;
   }
 
   & .body {
-    padding: 0 1rem;
+    padding: 0 1.5rem;
+    padding-bottom: 0.8rem;
 
     & .title {
-      margin: 0.5rem 0;
+      margin: 0.8rem 0 1.3rem 0;
     }
 
     & .decription {
       font-size: 0.8rem;
+      line-height: 0.5;
+
+      & .key {
+        font-weight: bold;
+      }
     }
   }
 }
