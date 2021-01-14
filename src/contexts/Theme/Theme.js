@@ -1,41 +1,60 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import {
+  THEME_DARK,
+  THEME_LIGHT,
+  THEME_BG_COLOR,
+  THEME_BG_ELEMENT_COLOR,
+  THEME_BG_INPUT_COLOR,
+  THEME_TEXT_COLOR,
+} from "utils/constants";
+
+const ThemeContext = createContext();
+export default ThemeContext;
 
 const themes = {
   light: {
-    bgElement: "hsl(0, 0%, 100%)",
-    bg: "hsl(0, 0%, 98%)",
-    text: "hsl(200, 15%, 8%)",
-    bgInput: "hsl(0, 0%, 52%)",
+    [THEME_BG_COLOR]: "hsl(0, 0%, 98%)",
+    [THEME_BG_ELEMENT_COLOR]: "hsl(0, 0%, 100%)",
+    [THEME_BG_INPUT_COLOR]: "hsl(0, 0%, 52%)",
+    [THEME_TEXT_COLOR]: "hsl(200, 15%, 8%)",
   },
   dark: {
-    bgElement: "hsl(209, 23%, 22%)",
-    bg: "hsl(207, 26%, 17%)",
-    text: "hsl(0, 0%, 100%)",
+    [THEME_BG_COLOR]: "hsl(207, 26%, 17%)",
+    [THEME_BG_ELEMENT_COLOR]: "hsl(209, 23%, 22%)",
+    [THEME_TEXT_COLOR]: "hsl(0, 0%, 100%)",
   },
 };
 
-export const ThemeContext = createContext();
+const setSassColorSchema = (themeObject) => {
+  // logic for global sass variables
+  for (let sassVariable in themeObject) {
+    document.documentElement.style.setProperty(
+      sassVariable,
+      themeObject[sassVariable]
+    );
+  }
+};
 
-function Theme({ children }) {
-  const [theme, setTheme] = useState("light");
+export function Theme({ children }) {
+  const [theme, setTheme] = useState(THEME_LIGHT);
+
+  useEffect(() => setSassColorSchema(themes[theme]), [theme]);
 
   const changeTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
+    const newTheme = isDarkTheme ? THEME_LIGHT : THEME_DARK;
     setTheme(newTheme);
   };
 
-  const isDarkTheme = theme === "dark";
+  const isDarkTheme = theme === THEME_DARK;
+  const isLightTheme = theme === THEME_LIGHT;
 
   const provide = {
-    theme,
     changeTheme,
-    colors: themes[theme],
     isDarkTheme,
+    isLightTheme,
   };
 
   return (
     <ThemeContext.Provider value={provide}>{children}</ThemeContext.Provider>
   );
 }
-
-export default Theme;
