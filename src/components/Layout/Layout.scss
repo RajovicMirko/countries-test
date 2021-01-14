@@ -4,6 +4,7 @@
   position: relative;
   min-height: inherit;
   display: grid;
+  grid-template-columns: minmax(320px, auto);
   grid-template-rows: minmax(60px, auto) 1fr;
 
   & header {
@@ -26,11 +27,11 @@
     background-color: var(--bg-color);
     color: var(--text-color);
 
-    @include media("<=phone") {
+    @include media("<=phone-big") {
       padding: 0 1rem;
     }
 
-    @include media(">=phone") {
+    @include media(">=phone-big") {
       padding: 0 2rem;
     }
 
