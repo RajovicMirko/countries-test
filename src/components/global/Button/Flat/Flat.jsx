@@ -1,5 +1,6 @@
 import "./Flat.scss";
 import React from "react";
+import Icon from "components/global/Icon";
 
 const defaultProps = {
   text: "",
@@ -12,7 +13,7 @@ function Flat(props) {
 
   return (
     <button className="button-flat" onClick={onClick}>
-      {icon && <i className={icon} />}
+      {icon && <Icon icon={icon} />}
       {text && text}
     </button>
   );
