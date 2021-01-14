@@ -1,0 +1,21 @@
+.button-flat {
+  background: none;
+  border: none;
+  outline: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+
+  color: var(--text-color);
+
+  & i {
+    font-size: 1rem;
+    margin-right: 0.8rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

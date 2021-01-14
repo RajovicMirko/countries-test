@@ -2,5 +2,15 @@
   position: relative;
   min-height: inherit;
   display: grid;
-  grid-template-rows: minmax(50px, auto) 1fr;
+  grid-template-rows: minmax(60px, auto) 1fr;
+
+  & header {
+    padding: 0 3em;
+    background-color: var(--bg-element-color);
+  }
+
+  & main {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
 }
