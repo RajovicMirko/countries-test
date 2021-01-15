@@ -3,15 +3,11 @@ import React from "react";
 
 const defaultProps = {
   children: null,
-  style: {},
+  className: "",
 };
 
 function HoverBox(props) {
-  return (
-    <div className={`hover-box ${props.className}`} style={props.style}>
-      {props.children}
-    </div>
-  );
+  return <div className={`hover-box ${props.className}`}>{props.children}</div>;
 }
 
 HoverBox.defaultProps = defaultProps;

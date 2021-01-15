@@ -2,12 +2,11 @@ import "./Button.scss";
 import React from "react";
 
 import Icon from "components/global/Icon";
-import HoverBox from "components/global/effects/HoverBox";
 
 const defaultProps = {
   icon: "",
   children: null,
-  style: {},
+  className: "",
   onClick: () => {},
 };
 
@@ -17,12 +16,10 @@ function Button(props) {
   };
 
   return (
-    <HoverBox style={props.style}>
-      <button className="button" onClick={_handleClick}>
-        <Icon icon={props.icon} />
-        {props.children}
-      </button>
-    </HoverBox>
+    <button className={`button ${props.className}`} onClick={_handleClick}>
+      <Icon icon={props.icon} />
+      {props.children}
+    </button>
   );
 }
 

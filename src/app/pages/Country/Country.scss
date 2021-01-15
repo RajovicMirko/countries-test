@@ -4,6 +4,10 @@
   display: grid;
   grid-template-rows: auto 1fr;
 
+  & .hover-custom {
+    width: 105px;
+  }
+
   & .data {
     position: relative;
     display: grid;

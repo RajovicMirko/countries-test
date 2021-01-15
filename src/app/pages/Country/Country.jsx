@@ -6,6 +6,7 @@ import { formatNumber } from "utils/helpers";
 import ControlesHeader from "components/Countries/ControlesHeader";
 import ButtonStrech from "components/global/Button/Strech";
 import Loading from "components/global/Loading";
+import HoverBox from "components/global/effects/HoverBox";
 
 function Countrie(props) {
   const { isLoading, country, fetchCountry3code } = useCountries();
@@ -46,13 +47,11 @@ function Countrie(props) {
         country && (
           <section className="country">
             <ControlesHeader>
-              <ButtonStrech
-                icon="fas fa-arrow-left"
-                onClick={handleGoBack}
-                style={{ width: "105px" }}
-              >
-                Back
-              </ButtonStrech>
+              <HoverBox className="hover-custom">
+                <ButtonStrech icon="fas fa-arrow-left" onClick={handleGoBack}>
+                  Back
+                </ButtonStrech>
+              </HoverBox>
             </ControlesHeader>
             <section className="data">
               <section className="left-data">
