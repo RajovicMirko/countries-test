@@ -30,7 +30,6 @@
         font-weight: 700;
         margin-bottom: 0.8em;
       }
-
       & .descriptions {
         display: flex;
         gap: 1em;
@@ -45,20 +44,44 @@
           flex-direction: column;
         }
 
-        & .description {
-          font-size: 0.8rem;
-          line-height: 2;
-
-          & .id {
-            font-weight: 600;
-          }
-          & .value {
-            opacity: 0.8;
-          }
-        }
-
         @include media("<=tablet") {
           flex-direction: column;
+        }
+      }
+
+      & .description {
+        font-size: 0.8rem;
+        line-height: 2;
+
+        & .id {
+          font-weight: 600;
+        }
+        & .value {
+          opacity: 0.8;
+        }
+      }
+
+      & .borders {
+        margin-top: 1.3em;
+
+        & .border-countries {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, 90px);
+          gap: 1rem;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          .btn-borders {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.3rem;
+            border-radius: 0;
+          }
+
+          & .hover-border-countries {
+            border-radius: 0;
+          }
         }
       }
     }

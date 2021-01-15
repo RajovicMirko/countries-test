@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import http from "utils/http";
+import http, { getApiUrl } from "utils/http";
 import {
   COUNTRIES_API_ENDPOINT,
   COUNTRIES_BY_REGION_API_ENDPOINT,
@@ -9,6 +9,7 @@ import {
 function useCountries() {
   const [isLoading, setIsLoading] = useState(false);
   const [country, setCountry] = useState({});
+  const [borderCountries, setBorderCountries] = useState([]);
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -28,13 +29,24 @@ function useCountries() {
     setIsLoading(false);
   };
 
-  const fetchCountry3code = async (code3char) => {
+  const fetchByAlpha3Code = async (code3char) => {
     setIsLoading(true);
     const url = `${COUNTRIES_BY_3_CODE_API_ENDPOINT}/${code3char}`;
     const result = await http.get(url);
-    console.log(result.data);
     setCountry(result.data);
     setIsLoading(false);
+  };
+
+  useEffect(() => fetchBorderCountries(), [country]);
+  const fetchBorderCountries = async () => {
+    if (!country.borders || !country.borders.length) return null;
+    const query = {
+      codes: country.borders.join(";"),
+    };
+    const url = getApiUrl(COUNTRIES_BY_3_CODE_API_ENDPOINT, query);
+
+    const result = await http.get(url);
+    setBorderCountries(result.data);
   };
 
   // region options and filter logic
@@ -87,11 +99,12 @@ function useCountries() {
     isLoading,
     countries: filteredCountries,
     country,
+    borderCountries,
     regionOptions,
     setSearchValue,
     setRegionFilterValue,
     fetchCountries,
-    fetchCountry3code,
+    fetchByAlpha3Code,
   };
 }
 
