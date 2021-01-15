@@ -49,7 +49,7 @@ function Countrie(props) {
               <ButtonStrech
                 icon="fas fa-arrow-left"
                 onClick={handleGoBack}
-                style={{ width: "27%" }}
+                style={{ width: "105px" }}
               >
                 Back
               </ButtonStrech>
