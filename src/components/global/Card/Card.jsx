@@ -23,7 +23,7 @@ function Card(props) {
     <Scale>
       <HoverBox>
         <div className="card-wrapper" onClick={_handleClick}>
-          <div className="image">{img && <img src={img} />}</div>
+          <div className="image">{img && <img src={img} alt={id} />}</div>
 
           <div className="body">
             <h4 className="title">{title}</h4>

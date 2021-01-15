@@ -32,6 +32,7 @@ function useCountries() {
     setIsLoading(true);
     const url = `${COUNTRIES_BY_3_CODE_API_ENDPOINT}/${code3char}`;
     const result = await http.get(url);
+    console.log(result.data);
     setCountry(result.data);
     setIsLoading(false);
   };
@@ -85,6 +86,7 @@ function useCountries() {
   return {
     isLoading,
     countries: filteredCountries,
+    country,
     regionOptions,
     setSearchValue,
     setRegionFilterValue,

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import useCountries from "hooks/useCountries";
 import { formatNumber } from "utils/helpers";
 // components
+import ControlesHeader from "components/Countries/ControlesHeader";
 import HoverBox from "components/global/effects/HoverBox";
 import InputText from "components/global/Input/Text";
 import Select from "components/global/Select";
@@ -43,7 +44,7 @@ function Countries(props) {
     default:
       return (
         <section className="countries">
-          <section className="controles">
+          <ControlesHeader>
             <HoverBox>
               <InputText
                 placeholder="Search for a country..."
@@ -59,7 +60,7 @@ function Countries(props) {
                 onChange={handleFilter}
               />
             </HoverBox>
-          </section>
+          </ControlesHeader>
 
           {!!countries.length && (
             <section className="cards">

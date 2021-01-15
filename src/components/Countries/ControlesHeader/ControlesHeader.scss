@@ -1,0 +1,16 @@
+@import "../../../scss/breakpoints";
+
+.controles-header {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(300px, 400px) 200px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 2em 0;
+
+  @include media("<=tablet") {
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+}
