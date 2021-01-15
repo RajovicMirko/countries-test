@@ -4,6 +4,7 @@ import useCountries from "hooks/useCountries";
 import { formatNumber } from "utils/helpers";
 // components
 import ControlesHeader from "components/Countries/ControlesHeader";
+import ButtonStrech from "components/global/Button/Strech";
 import Loading from "components/global/Loading";
 
 function Countrie(props) {
@@ -13,8 +14,6 @@ function Countrie(props) {
     const country3code = props.match.params.id;
     fetchCountry3code(country3code);
   }, []);
-
-  console.log(country);
 
   const topLevelDomain = country.topLevelDomain
     ? country.topLevelDomain[0]
@@ -35,6 +34,10 @@ function Countrie(props) {
     );
   };
 
+  const handleGoBack = () => {
+    props.history.goBack();
+  };
+
   switch (true) {
     case isLoading:
       return <Loading text="Loading country..." />;
@@ -42,7 +45,15 @@ function Countrie(props) {
       return (
         country && (
           <section className="country">
-            <ControlesHeader>header</ControlesHeader>
+            <ControlesHeader>
+              <ButtonStrech
+                icon="fas fa-arrow-left"
+                onClick={handleGoBack}
+                style={{ width: "27%" }}
+              >
+                Back
+              </ButtonStrech>
+            </ControlesHeader>
             <section className="data">
               <section className="left-data">
                 <img src={country.flag} alt={country.country3code} />
