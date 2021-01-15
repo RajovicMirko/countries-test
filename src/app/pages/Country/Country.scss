@@ -1,0 +1,72 @@
+@import "../../../scss/breakpoints";
+
+.country {
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  & .data {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3em;
+
+    & .left-data {
+      & img {
+        max-width: 100%;
+      }
+    }
+
+    & .right-data {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      & .title {
+        font-size: 1.3em;
+        font-weight: 700;
+        margin-bottom: 0.8em;
+      }
+
+      & .descriptions {
+        display: flex;
+        gap: 1em;
+        font-size: 0.8rem;
+
+        & .left {
+          display: flex;
+          flex-direction: column;
+        }
+        & .right {
+          display: flex;
+          flex-direction: column;
+        }
+
+        & .description {
+          font-size: 0.8rem;
+          line-height: 2;
+
+          & .id {
+            font-weight: 600;
+          }
+          & .value {
+            opacity: 0.8;
+          }
+        }
+
+        @include media("<=tablet") {
+          flex-direction: column;
+        }
+      }
+    }
+
+    @include media("<=tablet") {
+      grid-template-columns: 1fr;
+      gap: 1.3em;
+      margin-bottom: 2em;
+
+      & .left-data {
+        text-align: center;
+      }
+    }
+  }
+}

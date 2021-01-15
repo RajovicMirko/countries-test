@@ -1,5 +1,7 @@
+import "./Country.scss";
 import React, { useEffect } from "react";
 import useCountries from "hooks/useCountries";
+import { formatNumber } from "utils/helpers";
 // components
 import ControlesHeader from "components/Countries/ControlesHeader";
 import Loading from "components/global/Loading";
@@ -12,15 +14,62 @@ function Countrie(props) {
     fetchCountry3code(country3code);
   }, []);
 
+  console.log(country);
+
+  const topLevelDomain = country.topLevelDomain
+    ? country.topLevelDomain[0]
+    : "";
+
+  const currencies =
+    country.currencies && country.currencies.map((cur) => cur.code).join(", ");
+
+  const languages =
+    country.languages && country.languages.map((lng) => lng.name).join(", ");
+
+  const Description = ({ id, value }) => {
+    return (
+      <div className="description">
+        <span className="id">{id}: </span>
+        <span className="value">{value}</span>
+      </div>
+    );
+  };
+
   switch (true) {
     case isLoading:
-      return <Loading text="Loading countries..." />;
+      return <Loading text="Loading country..." />;
     default:
       return (
-        <>
-          <ControlesHeader>header</ControlesHeader>
-          <div>{JSON.stringify(country)}</div>;
-        </>
+        country && (
+          <section className="country">
+            <ControlesHeader>header</ControlesHeader>
+            <section className="data">
+              <section className="left-data">
+                <img src={country.flag} alt={country.country3code} />
+              </section>
+              <section className="right-data">
+                <section className="title">{country.name}</section>
+                <section className="descriptions">
+                  <section className="left">
+                    <Description id="Native Name" value={country.nativeName} />
+                    <Description
+                      id="Population"
+                      value={formatNumber(country.population)}
+                    />
+                    <Description id="Region" value={country.region} />
+                    <Description id="Sub Region" value={country.subregion} />
+                    <Description id="Capital" value={country.capital} />
+                  </section>
+                  <section className="right">
+                    <Description id="Top Level Domain" value={topLevelDomain} />
+                    <Description id="Currencies" value={currencies} />
+                    <Description id="Languages" value={languages} />
+                  </section>
+                </section>
+              </section>
+            </section>
+          </section>
+        )
       );
   }
 }
