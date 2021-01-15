@@ -5,9 +5,12 @@
   justify-content: space-between;
   align-items: center;
 
-  & .banner span {
-    font-size: 1.1em;
-    font-weight: bold;
-    color: var(--text-color);
+  & .banner {
+    & span {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: var(--text-color);
+      cursor: pointer;
+    }
   }
 }

@@ -39,6 +39,7 @@ function useCountries() {
 
   useEffect(() => fetchBorderCountries(), [country]);
   const fetchBorderCountries = async () => {
+    setIsLoading(true);
     if (!country.borders || !country.borders.length) return null;
     const query = {
       codes: country.borders.join(";"),
@@ -47,6 +48,7 @@ function useCountries() {
 
     const result = await http.get(url);
     setBorderCountries(result.data);
+    setIsLoading(false);
   };
 
   // region options and filter logic
@@ -66,11 +68,13 @@ function useCountries() {
   useEffect(() => fetchRegion(), [regionFilterValue]);
 
   const fetchRegion = async () => {
+    setIsLoading(true);
     if (!regionFilterValue) return;
 
     const url = `${COUNTRIES_BY_REGION_API_ENDPOINT}/${regionFilterValue}`;
     const result = await http.get(url);
     setInitState(result.data);
+    setIsLoading(false);
   };
 
   // search logic
