@@ -1,0 +1,11 @@
+.description {
+  font-size: 0.8rem;
+  line-height: 2;
+
+  & .id {
+    font-weight: 600;
+  }
+  & .value {
+    opacity: 0.8;
+  }
+}

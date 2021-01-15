@@ -14,6 +14,16 @@
     grid-template-columns: 1fr 1fr;
     gap: 3em;
 
+    @include media("<=tablet") {
+      grid-template-columns: 1fr;
+      gap: 1.3em;
+      margin-bottom: 2em;
+
+      & .left-data {
+        text-align: center;
+      }
+    }
+
     & .left-data {
       & img {
         max-width: 100%;
@@ -30,34 +40,14 @@
         font-weight: 700;
         margin-bottom: 0.8em;
       }
+
       & .descriptions {
         display: flex;
         gap: 1em;
         font-size: 0.8rem;
 
-        & .left {
-          display: flex;
-          flex-direction: column;
-        }
-        & .right {
-          display: flex;
-          flex-direction: column;
-        }
-
         @include media("<=tablet") {
           flex-direction: column;
-        }
-      }
-
-      & .description {
-        font-size: 0.8rem;
-        line-height: 2;
-
-        & .id {
-          font-weight: 600;
-        }
-        & .value {
-          opacity: 0.8;
         }
       }
 
@@ -83,16 +73,6 @@
             border-radius: 0;
           }
         }
-      }
-    }
-
-    @include media("<=tablet") {
-      grid-template-columns: 1fr;
-      gap: 1.3em;
-      margin-bottom: 2em;
-
-      & .left-data {
-        text-align: center;
       }
     }
   }

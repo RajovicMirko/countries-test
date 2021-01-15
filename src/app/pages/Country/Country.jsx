@@ -7,6 +7,7 @@ import ControlesHeader from "components/Countries/ControlesHeader";
 import ButtonStrech from "components/global/Button/Strech";
 import Loading from "components/global/Loading";
 import HoverBox from "components/global/effects/HoverBox";
+import Description from "components/Countries/Description";
 
 function Country(props) {
   const alpha3CodeParamsId = props.match.params.id;
@@ -17,9 +18,18 @@ function Country(props) {
     fetchByAlpha3Code,
   } = useCountries();
 
+  // init fetch country data
   useEffect(() => {
     fetchByAlpha3Code(alpha3CodeParamsId);
   }, [alpha3CodeParamsId]);
+
+  const handleGoBack = () => {
+    props.history.goBack();
+  };
+
+  const handleBorderCountryClick = (alpha3Code) => {
+    props.history.push(`/country/${alpha3Code}`);
+  };
 
   const topLevelDomain = country.topLevelDomain
     ? country.topLevelDomain[0]
@@ -31,23 +41,23 @@ function Country(props) {
   const languages =
     country.languages && country.languages.map((lng) => lng.name).join(", ");
 
-  const Description = ({ id, value, children, className }) => {
-    return (
-      <div className={`description ${className}`}>
-        <span className="id">{id}: </span>
-        {value && <span className="value">{value}</span>}
-        {children && children}
-      </div>
-    );
-  };
-
-  const handleGoBack = () => {
-    props.history.goBack();
-  };
-
-  const handleBorderCountryClick = (alpha3Code) => {
-    props.history.push(`/country/${alpha3Code}`);
-  };
+  const renderBorderCountries = (
+    <Description className="borders" id="Border Countries">
+      <section className="border-countries">
+        {borderCountries.map((border) => (
+          <HoverBox key={border.alpha3Code} className="hover-border-countries">
+            <ButtonStrech
+              id={border.alpha3Code}
+              className="btn-borders"
+              onClick={handleBorderCountryClick}
+            >
+              {border.name}
+            </ButtonStrech>
+          </HoverBox>
+        ))}
+      </section>
+    </Description>
+  );
 
   switch (true) {
     case isLoading:
@@ -78,14 +88,8 @@ function Country(props) {
                       value={formatNumber(country.population)}
                     />
                     <Description id="Region" value={country.region} />
-                    <Description
-                      id="Sub Region"
-                      value={country.subregion || "N/A"}
-                    />
-                    <Description
-                      id="Capital"
-                      value={country.capital || "N/A"}
-                    />
+                    <Description id="Sub Region" value={country.subregion} />
+                    <Description id="Capital" value={country.capital} />
                   </section>
                   <section className="right">
                     <Description id="Top Level Domain" value={topLevelDomain} />
@@ -94,26 +98,7 @@ function Country(props) {
                   </section>
                 </section>
 
-                {!!borderCountries && !!borderCountries.length && (
-                  <Description className="borders" id="Border Countries">
-                    <section className="border-countries">
-                      {borderCountries.map((border) => (
-                        <HoverBox
-                          key={border.alpha3Code}
-                          className="hover-border-countries"
-                        >
-                          <ButtonStrech
-                            id={border.alpha3Code}
-                            className="btn-borders"
-                            onClick={handleBorderCountryClick}
-                          >
-                            {border.name}
-                          </ButtonStrech>
-                        </HoverBox>
-                      ))}
-                    </section>
-                  </Description>
-                )}
+                {!!borderCountries.length && renderBorderCountries}
               </section>
             </section>
           </section>
