@@ -1,0 +1,9 @@
+.no-data {
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+
+  & h4 {
+    margin: 0;
+  }
+}

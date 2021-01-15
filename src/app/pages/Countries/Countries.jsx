@@ -8,8 +8,9 @@ import InputText from "components/global/Input/Text";
 import Select from "components/global/Select";
 import Card from "components/global/Card";
 import Loading from "components/global/Loading";
+import NoData from "components/global/NoData";
 
-function Countries() {
+function Countries(props) {
   const {
     isLoading,
     countries,
@@ -31,7 +32,9 @@ function Countries() {
     if (value) setRegionFilterValue(value);
   };
 
-  const NoData = () => <div>No data to display</div>;
+  const handleCardClick = (country3code) => {
+    props.history.push(`/country/${country3code}`);
+  };
 
   switch (true) {
     case isLoading:
@@ -51,19 +54,20 @@ function Countries() {
 
             <HoverBox>
               <Select
-                defaultValue="Filter by Region"
+                defaultText="Filter by Region"
                 options={regionOptions}
                 onChange={handleFilter}
               />
             </HoverBox>
           </section>
 
-          {countries && (
+          {!!countries.length && (
             <section className="cards">
               {countries &&
                 countries.map((country) => (
                   <Card
                     key={country.alpha3Code}
+                    id={country.alpha3Code}
                     title={country.name}
                     img={country.flag}
                     description={{
@@ -71,6 +75,7 @@ function Countries() {
                       Region: country.region || "N/A",
                       Capital: country.capital || "N/A",
                     }}
+                    onClick={handleCardClick}
                   />
                 ))}
             </section>

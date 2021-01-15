@@ -28,7 +28,7 @@
     color: var(--text-color);
 
     @include media("<=phone-big") {
-      padding: 0 1rem;
+      padding: 0 3rem;
     }
 
     @include media(">=phone-big") {

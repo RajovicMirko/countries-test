@@ -3,6 +3,7 @@ import http from "utils/http";
 import {
   COUNTRIES_API_ENDPOINT,
   COUNTRIES_BY_REGION_API_ENDPOINT,
+  COUNTRIES_BY_3_CODE_API_ENDPOINT,
 } from "utils/constants";
 
 function useCountries() {
@@ -24,6 +25,14 @@ function useCountries() {
     const result = await http.get(COUNTRIES_API_ENDPOINT);
     prepareRegionOptions(result.data);
     setInitState(result.data);
+    setIsLoading(false);
+  };
+
+  const fetchCountry3code = async (code3char) => {
+    setIsLoading(true);
+    const url = `${COUNTRIES_BY_3_CODE_API_ENDPOINT}/${code3char}`;
+    const result = await http.get(url);
+    setCountry(result.data);
     setIsLoading(false);
   };
 
@@ -80,6 +89,7 @@ function useCountries() {
     setSearchValue,
     setRegionFilterValue,
     fetchCountries,
+    fetchCountry3code,
   };
 }
 

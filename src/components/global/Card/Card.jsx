@@ -13,12 +13,16 @@ const defaultProps = {
 };
 
 function Card(props) {
-  const { title, img, description, onClick } = props;
+  const { id, title, img, description, onClick } = props;
+
+  const _handleClick = (event) => {
+    onClick(id);
+  };
 
   return (
     <Scale>
       <HoverBox>
-        <div className="card-wrapper" onClick={onClick}>
+        <div className="card-wrapper" onClick={_handleClick}>
           <div className="image">{img && <img src={img} />}</div>
 
           <div className="body">
