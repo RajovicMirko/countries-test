@@ -1,11 +1,11 @@
-.button {
+.button-strech {
+  width: 100%;
   border: inherit;
   outline: inherit;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  width: 100%;
 
   background-color: var(--bg-element-color);
   color: var(--text-color);

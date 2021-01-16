@@ -7,14 +7,11 @@
   align-items: center;
   justify-content: space-between;
   font-weight: bold;
+  cursor: pointer;
 
   color: var(--text-color);
 
   & i {
     margin-right: 0.8rem;
-  }
-
-  &:hover {
-    cursor: pointer;
   }
 }
