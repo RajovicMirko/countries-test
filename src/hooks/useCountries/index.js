@@ -1,58 +1,86 @@
 import { useState, useEffect } from "react";
-import http, { getApiUrl } from "utils/http";
+import useApi from "hooks/useApi";
 import {
   COUNTRIES_API_ENDPOINT,
   COUNTRIES_BY_REGION_API_ENDPOINT,
   COUNTRIES_BY_3_CODE_API_ENDPOINT,
 } from "utils/constants";
 
+const _INIT_ERROR = {
+  is: false,
+  message: "",
+};
+
 function useCountries() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [country, setCountry] = useState({});
-  const [borderCountries, setBorderCountries] = useState([]);
-  const [countries, setCountries] = useState([]);
-  const [filteredCountries, setFilteredCountries] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  const [regionOptions, setRegionOptions] = useState([]);
-  const [regionFilterValue, setRegionFilterValue] = useState("");
+  //#region Hooks
+  const { http, getCountriesQueryUrl } = useApi();
+  //#endregion Hooks
 
-  const setInitState = (data) => {
-    setCountries(data);
-    setFilteredCountries(data);
+  //#region State
+  const [_countries, _setCountries] = useState([]);
+  const [_searchValue, setSearchValue] = useState("");
+  const [_regionFilterValue, setRegionFilterValue] = useState("");
+
+  const [isLoading, _setIsLoading] = useState(false);
+  const [error, _setError] = useState(_INIT_ERROR);
+  const [country, _setCountry] = useState({});
+  const [borderCountries, _setBorderCountries] = useState([]);
+  const [filteredCountries, _setFilteredCountries] = useState([]);
+  const [regionOptions, _setRegionOptions] = useState([]);
+  //#endregion State
+
+  //#region Private functions
+  const _startWork = () => {
+    _setIsLoading(true);
+    _setError(_INIT_ERROR);
+
+    return true;
   };
 
-  const fetchCountries = async () => {
-    setIsLoading(true);
-    const result = await http.get(COUNTRIES_API_ENDPOINT);
-    prepareRegionOptions(result.data);
-    setInitState(result.data);
-    setIsLoading(false);
+  const _endWork = (error = null) => {
+    _setIsLoading(false);
+
+    if (error) {
+      _setError({
+        ..._INIT_ERROR,
+        is: true,
+        message: error.message,
+      });
+
+      return false;
+    }
+
+    return true;
   };
 
-  const fetchByAlpha3Code = async (code3char) => {
-    setIsLoading(true);
-    const url = `${COUNTRIES_BY_3_CODE_API_ENDPOINT}/${code3char}`;
-    const result = await http.get(url);
-    setCountry(result.data);
-    setIsLoading(false);
+  const _setInitState = (data) => {
+    _setCountries(data);
+    _setFilteredCountries(data);
   };
 
-  useEffect(() => fetchBorderCountries(), [country]);
-  const fetchBorderCountries = async () => {
-    setIsLoading(true);
-    if (!country.borders || !country.borders.length) return null;
-    const query = {
-      codes: country.borders.join(";"),
-    };
-    const url = getApiUrl(COUNTRIES_BY_3_CODE_API_ENDPOINT, query);
+  const _fetchBorderCountries = async () => {
+    _startWork();
+    if (!country.borders || !country.borders.length) {
+      return _endWork();
+    }
 
-    const result = await http.get(url);
-    setBorderCountries(result.data);
-    setIsLoading(false);
+    try {
+      const query = {
+        codes: country.borders.join(";"),
+      };
+      const url = getCountriesQueryUrl(COUNTRIES_BY_3_CODE_API_ENDPOINT, query);
+
+      const result = await http.get(url);
+      _setBorderCountries(result.data);
+      return _endWork();
+    } catch (error) {
+      return _endWork(error);
+    }
   };
+  // When country is changed call _fetchBorderCountries
+  useEffect(() => _fetchBorderCountries(), [country]);
 
-  // region options and filter logic
-  const prepareRegionOptions = (allCountries) => {
+  const _prepareRegionOptions = (allCountries) => {
     const regionsUnique = [
       ...new Set(allCountries.map((country) => country.region)),
     ].filter((region) => !!region);
@@ -62,45 +90,70 @@ function useCountries() {
       value: region,
     }));
 
-    setRegionOptions(optionsArray);
+    _setRegionOptions(optionsArray);
   };
 
-  useEffect(() => fetchRegion(), [regionFilterValue]);
+  // Filter logic ///////////////////////////////////////////////////
+  const _fetchRegion = async () => {
+    _startWork();
+    if (!_regionFilterValue) {
+      _endWork();
+      return;
+    }
 
-  const fetchRegion = async () => {
-    setIsLoading(true);
-    if (!regionFilterValue) return;
-
-    const url = `${COUNTRIES_BY_REGION_API_ENDPOINT}/${regionFilterValue}`;
+    const url = `${COUNTRIES_BY_REGION_API_ENDPOINT}/${_regionFilterValue}`;
     const result = await http.get(url);
-    setInitState(result.data);
-    setIsLoading(false);
+    _setInitState(result.data);
+    _endWork();
   };
+  // When _regionFilterValue is changed call _fetchRegion
+  useEffect(() => _fetchRegion(), [_regionFilterValue]);
 
-  // search logic
-  useEffect(() => searchCountries(), [searchValue]);
-
-  const searchCountries = () => {
-    if (!searchValue) setFilteredCountries(countries);
+  // Search logic //////////////////////////////////////////////////
+  const _searchCountries = () => {
+    if (!_searchValue) _setFilteredCountries(_countries);
 
     const pattern = /^(<|<=|>|>=)[0-9]+$/;
-    const lowerSearchValue = searchValue.trim().toLowerCase();
-    const filterResult = countries.filter((country) => {
+    const lowerSearchValue = _searchValue.trim().toLowerCase();
+    const filterResult = _countries.filter((country) => {
       return (
         country.name.toLowerCase().indexOf(lowerSearchValue) !== -1 ||
         country.capital.toLowerCase().indexOf(lowerSearchValue) !== -1 ||
         country.region.toLowerCase().indexOf(lowerSearchValue) !== -1 ||
-        (pattern.test(searchValue) &&
-          eval(country.population + searchValue) &&
+        (pattern.test(_searchValue) &&
+          eval(country.population + _searchValue) &&
           country.population > 0)
       );
     });
 
-    setFilteredCountries(filterResult);
+    _setFilteredCountries(filterResult);
+  };
+  // When _searchValue is changed call _searchCountries
+  useEffect(() => _searchCountries(), [_searchValue]);
+  //#endregion Private functions
+
+  //#region Public functions
+  const fetchCountries = async () => {
+    _startWork();
+    const result = await http.get(COUNTRIES_API_ENDPOINT);
+    _prepareRegionOptions(result.data);
+    _setInitState(result.data);
+    _endWork();
   };
 
+  const fetchByAlpha3Code = async (code3char) => {
+    _startWork();
+    const url = `${COUNTRIES_BY_3_CODE_API_ENDPOINT}/${code3char}`;
+    const result = await http.get(url);
+    _setCountry(result.data);
+    _endWork();
+  };
+  //#endregion Public functions
+
+  //#region useApi result
   return {
     isLoading,
+    error,
     countries: filteredCountries,
     country,
     borderCountries,
@@ -110,6 +163,7 @@ function useCountries() {
     fetchCountries,
     fetchByAlpha3Code,
   };
+  //#endregion useApi result
 }
 
 export default useCountries;

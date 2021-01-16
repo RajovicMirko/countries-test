@@ -1,5 +1,8 @@
 export const formatNumber = (number) => {
-  if (number)
-    return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  return null;
+  if (number) {
+    const formatPattern = /(\d)(?=(\d{3})+(?!\d))/g;
+    return number.toString().replace(formatPattern, "$1,");
+  } else {
+    return null;
+  }
 };
