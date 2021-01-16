@@ -1,5 +1,5 @@
 import "./Layout.scss";
-import React from "react";
+// components
 import NavBar from "./NavBar";
 
 function Layout({ children }) {
@@ -8,6 +8,7 @@ function Layout({ children }) {
       <header>
         <NavBar />
       </header>
+
       <main>{children}</main>
     </div>
   );
