@@ -7,7 +7,7 @@ import ControlesHeader from "components/Countries/ControlesHeader";
 import HoverBox from "components/global/effects/HoverBox";
 import InputText from "components/global/Input/Text";
 import Select from "components/global/Select";
-import Card from "components/global/Card";
+import CountryCard from "components/Countries/Card";
 import Loading from "components/global/Loading";
 import NoData from "components/global/NoData";
 
@@ -66,7 +66,7 @@ function Countries(props) {
             <section className="cards">
               {countries &&
                 countries.map((country) => (
-                  <Card
+                  <CountryCard
                     key={country.alpha3Code}
                     id={country.alpha3Code}
                     title={country.name}
