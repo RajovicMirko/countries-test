@@ -17,7 +17,9 @@ function Select(props) {
 
   return (
     <select className="select" value={selectValue} onChange={_handleChange}>
-      <option value="">{defaultText}</option>
+      <option value="" hidden>
+        {defaultText}
+      </option>
       {options.map((option) => (
         <option key={option.key} value={option.key}>
           {option.value}
