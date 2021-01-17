@@ -1,11 +1,12 @@
 import "./Text.scss";
-import React, { useState } from "react";
+import { useState } from "react";
 import Icon from "components/global/Icon";
 
 const defaultProps = {
   icon: "",
   value: "",
   placeholder: "",
+  onChange: () => {},
 };
 
 function InputText(props) {
@@ -24,8 +25,8 @@ function InputText(props) {
       <input
         type="text"
         value={inputValue}
-        onChange={_handleChange}
         placeholder={placeholder}
+        onChange={_handleChange}
       />
     </div>
   );

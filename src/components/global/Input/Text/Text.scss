@@ -24,15 +24,18 @@
     &::-webkit-input-placeholder {
       /* Chrome/Opera/Safari */
       color: inherit;
+      opacity: var(--placeholder-opacity);
     }
 
     &::-moz-placeholder {
       /* Firefox 19+ */
       color: inherit;
+      opacity: var(--placeholder-opacity);
     }
 
     &::placeholder {
       color: inherit;
+      opacity: var(--placeholder-opacity);
     }
   }
 }

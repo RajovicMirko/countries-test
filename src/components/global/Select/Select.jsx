@@ -1,5 +1,5 @@
 import "./Select.scss";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const defaultProps = {
   options: [],
@@ -11,15 +11,11 @@ function Select(props) {
   const { options, onChange, defaultText } = props;
   const [selectValue, setSelectValue] = useState("");
 
+  const _handleChange = (event) => setSelectValue(event.target.value);
   useEffect(() => onChange(selectValue), [selectValue, onChange]);
 
-  const _handleChange = (event) => {
-    const value = event.target.value;
-    setSelectValue(value);
-  };
-
   return (
-    <select className="select" onChange={_handleChange}>
+    <select className="select" value={selectValue} onChange={_handleChange}>
       <option value="">{defaultText}</option>
       {options.map((option) => (
         <option key={option.key} value={option.key}>
