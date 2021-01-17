@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 const defaultProps = {
   options: [],
   defaultText: "Select an option",
+  value: "",
   onChange: () => {},
 };
 
 function Select(props) {
-  const { options, onChange, defaultText } = props;
-  const [selectValue, setSelectValue] = useState("");
+  const { options, defaultText, value, onChange } = props;
+  const [selectValue, setSelectValue] = useState(value);
 
   const _handleChange = (event) => setSelectValue(event.target.value);
   useEffect(() => onChange(selectValue), [selectValue, onChange]);

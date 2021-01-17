@@ -97,8 +97,7 @@ function useCountries() {
   const _fetchRegion = async () => {
     _startWork();
     if (!_regionFilterValue) {
-      _endWork();
-      return;
+      return _endWork();
     }
 
     const url = `${COUNTRIES_BY_REGION_API_ENDPOINT}/${_regionFilterValue}`;
@@ -160,6 +159,7 @@ function useCountries() {
     regionOptions,
     setSearchValue,
     setRegionFilterValue,
+    regionFilterValue: _regionFilterValue,
     fetchCountries,
     fetchByAlpha3Code,
   };

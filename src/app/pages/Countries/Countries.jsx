@@ -18,6 +18,7 @@ function Countries(props) {
     regionOptions,
     setRegionFilterValue,
     setSearchValue,
+    regionFilterValue,
     fetchCountries,
   } = useCountries();
 
@@ -56,6 +57,7 @@ function Countries(props) {
             <HoverBox>
               <Select
                 defaultText="Filter by Region"
+                value={regionFilterValue}
                 options={regionOptions}
                 onChange={handleFilter}
               />
