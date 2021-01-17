@@ -1,15 +1,15 @@
 .card-wrapper {
-  position: relative;
-  width: 100%;
   height: 100%;
-  border-radius: var(--default-border-radius);
   overflow: hidden;
+  cursor: pointer;
+  border-radius: var(--default-border-radius);
   background-color: var(--bg-element-color);
   color: var(--text-color);
 
-  & img {
-    height: 180px;
+  & .image-top {
     width: 100%;
+    height: 160px;
+    object-fit: cover;
   }
 
   & .body {
@@ -18,15 +18,6 @@
 
     & .title {
       margin: 0.8rem 0 1.3rem 0;
-    }
-
-    & .decription {
-      font-size: 0.8rem;
-      line-height: 0.5;
-
-      & .key {
-        font-weight: bold;
-      }
     }
   }
 }

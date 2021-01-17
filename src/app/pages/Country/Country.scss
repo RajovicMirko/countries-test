@@ -55,18 +55,14 @@
         margin-top: 1.3em;
 
         & .border-countries {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, 90px);
+          display: flex;
+          flex-wrap: wrap;
           gap: 1rem;
-          justify-content: flex-start;
-          align-items: flex-start;
 
           .btn-borders {
-            display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 0.3rem;
             border-radius: 0;
+            padding: 8px 12px;
           }
 
           & .hover-border-countries {

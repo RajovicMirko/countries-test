@@ -1,0 +1,11 @@
+.decription {
+  font-size: 0.8rem;
+  line-height: 0.5;
+
+  & .key {
+    font-weight: bold;
+  }
+
+  & .text {
+  }
+}

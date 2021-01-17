@@ -1,5 +1,4 @@
 import "./Icon.scss";
-import React from "react";
 
 const defaultProps = {
   icon: "",

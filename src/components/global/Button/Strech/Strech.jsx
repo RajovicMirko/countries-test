@@ -1,25 +1,28 @@
-import "./Flat.scss";
+import "./Strech.scss";
 // components
 import Icon from "components/global/Icon";
 
 const defaultProps = {
   id: "",
-  text: "",
   icon: "",
+  children: null,
   className: "",
   onClick: () => {},
 };
 
-function ButtonFlat(props) {
+function ButtonStrech(props) {
   const _handleClick = () => props.onClick(props.id);
 
   return (
-    <button className={`button-flat ${props.className}`} onClick={_handleClick}>
+    <button
+      className={`button-strech ${props.className}`}
+      onClick={_handleClick}
+    >
       {props.icon && <Icon icon={props.icon} />}
-      {props.text && props.text}
+      {props.children}
     </button>
   );
 }
 
-ButtonFlat.defaultProps = defaultProps;
-export default ButtonFlat;
+ButtonStrech.defaultProps = defaultProps;
+export default ButtonStrech;
