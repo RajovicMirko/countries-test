@@ -1,5 +1,6 @@
 import "./Country.scss";
 import React, { useEffect } from "react";
+import usePages from "hooks/usePages";
 import useCountries from "hooks/useCountries";
 import { formatNumber } from "utils/helpers";
 // components
@@ -11,6 +12,7 @@ import Description from "components/Countries/Description";
 
 function Country(props) {
   const alpha3CodeParamsId = props.match.params.id;
+  const { generatePath } = usePages();
   const {
     isLoading,
     country,
@@ -28,7 +30,13 @@ function Country(props) {
   };
 
   const handleBorderCountryClick = (alpha3Code) => {
-    props.history.push(`/country/${alpha3Code}`);
+    const url = generatePath({
+      pageName: "country",
+      props: {
+        id: alpha3Code,
+      },
+    });
+    props.history.push(url);
   };
 
   const topLevelDomain = country.topLevelDomain

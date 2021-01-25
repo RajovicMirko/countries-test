@@ -1,5 +1,6 @@
 import "./Countries.scss";
 import React, { useEffect } from "react";
+import usePages from "hooks/usePages";
 import useCountries from "hooks/useCountries";
 import { formatNumber } from "utils/helpers";
 // components
@@ -12,6 +13,7 @@ import Loading from "components/global/Loading";
 import NoData from "components/global/NoData";
 
 function Countries(props) {
+  const { generatePath } = usePages();
   const {
     isLoading,
     countries,
@@ -35,7 +37,13 @@ function Countries(props) {
   };
 
   const handleCardClick = (country3code) => {
-    props.history.push(`/country/${country3code}`);
+    const url = generatePath({
+      pageName: "country",
+      props: {
+        id: country3code,
+      },
+    });
+    props.history.push(url);
   };
 
   switch (true) {

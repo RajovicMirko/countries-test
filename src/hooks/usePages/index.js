@@ -2,7 +2,7 @@ import useConfig from "./useConfig";
 import { generateLinks, generateRoutes } from "./functions";
 
 const usePages = () => {
-  const { pages } = useConfig();
+  const { pages, generatePath } = useConfig();
 
   const routes = generateRoutes(pages); // for router map
   const navLinks = generateLinks(pages); // for navigation map
@@ -10,6 +10,7 @@ const usePages = () => {
   return {
     navLinks,
     routes,
+    generatePath,
   };
 };
 
