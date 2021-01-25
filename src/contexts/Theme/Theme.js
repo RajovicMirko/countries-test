@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import useLocalStorage from "hooks/useLocalStorage";
 import {
   THEME_DARK,
   THEME_LIGHT,
@@ -7,6 +8,7 @@ import {
   THEME_BG_INPUT_COLOR,
   THEME_TEXT_COLOR,
   THEME_BOX_SHADOW_COLOR,
+  LS_THEME_KEY,
 } from "utils/constants";
 
 const _themes = {
@@ -36,17 +38,26 @@ const _setSassColorSchema = (themeObject) => {
 };
 
 export function Theme({ children }) {
-  const [_theme, _setTheme] = useState(THEME_LIGHT);
+  const { getLs, setLs, hasLs } = useLocalStorage();
+  const [_theme, _setTheme] = useState("");
+
+  useEffect(() => {
+    if (!hasLs(LS_THEME_KEY)) {
+      _setTheme(setLs(LS_THEME_KEY, THEME_LIGHT));
+    } else {
+      _setTheme(getLs(LS_THEME_KEY));
+    }
+  }, []);
+
   useEffect(() => _setSassColorSchema(_themes[_theme]), [_theme]);
-
-  const isDarkTheme = _theme === THEME_DARK;
-
-  const isLightTheme = _theme === THEME_LIGHT;
 
   const changeTheme = () => {
     const newTheme = isDarkTheme ? THEME_LIGHT : THEME_DARK;
-    _setTheme(newTheme);
+    _setTheme(setLs(LS_THEME_KEY, newTheme));
   };
+
+  const isDarkTheme = _theme === THEME_DARK;
+  const isLightTheme = _theme === THEME_LIGHT;
 
   const provide = {
     changeTheme,

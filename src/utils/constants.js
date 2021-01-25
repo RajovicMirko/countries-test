@@ -11,3 +11,6 @@ export const THEME_BOX_SHADOW_COLOR = "--box-shadow-color";
 export const COUNTRIES_API_ENDPOINT = "/all";
 export const COUNTRIES_BY_REGION_API_ENDPOINT = "/region";
 export const COUNTRIES_BY_3_CODE_API_ENDPOINT = "/alpha";
+
+// LocalStorage
+export const LS_THEME_KEY = "countriesTheme";
